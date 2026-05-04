@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Career Guide - Transform Your Journey</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* --- Modal Scrollability & Styling --- */
+      .modal-overlay {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 1000;
+        transition: opacity 0.3s ease;
+      }
+
+      .modal-overlay.hidden {
+        display: none;
+      }
+
+      .modal-window {
+        max-height: 85vh; /* Responsive height */
+        overflow-y: auto;
+        width: 90%;
+        max-width: 550px;
+        background: white;
+        border-radius: 15px;
+        position: relative;
+        padding: 2.5rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Custom Scrollbar */
+      .modal-window::-webkit-scrollbar {
+        width: 6px;
+      }
+      .modal-window::-webkit-scrollbar-thumb {
+        background: #bbb;
+        border-radius: 10px;
+      }
+
+      body.modal-open {
+        overflow: hidden;
+      }
+
+      .form-group {
+        margin-bottom: 1.2rem;
+        display: flex;
+        flex-direction: column;
+      }
+      .form-group label {
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #333;
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-family: inherit;
+      }
+
+      .form-status {
+        margin-top: 10px;
+        font-weight: 500;
+        text-align: center;
+      }
+      .success-text {
+        color: #27ae60;
+      }
+      .error-text {
+        color: #e74c3c;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo"><i class="fa-solid fa-brain"></i> AI Career Guide</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#resources">Resources</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <header id="home" class="hero">
+      <div class="badge">
+        <i class="fa-solid fa-bolt"></i> AI-Powered Career Solutions
+      </div>
+      <h1>
+        Transform Your Career Journey<br /><span>with AI Intelligence</span>
+      </h1>
+      <p>
+        Empowering job seekers and employers with cutting-edge AI technology
+        tailored for the Sri Lankan job market.
+      </p>
+      <div class="hero-actions">
+        <a href="#resources" class="btn-main">Start Your Journey</a>
+        <button id="openContactBtn" class="btn-secondary">Contact Us</button>
+      </div>
+    </header>
+
+    <!-- Features Section Placeholder -->
+    <section id="features" class="section">
+      <!-- (Keep your features grid here as per previous versions) -->
+    </section>
+
+    <!-- Modal Section -->
+    <div class="modal-overlay hidden" id="contactModal" aria-hidden="true">
+      <div class="modal-window" role="dialog" aria-modal="true">
+        <button
+          type="button"
+          id="closeContactBtn"
+          style="
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+          "
+        >
+          &times;
+        </button>
+
+        <div class="modal-header">
+          <h3>Send us a Message</h3>
+          <p>We usually respond within 24 hours.</p>
+        </div>
+
+        <!-- UPDATED FORM FOR FORMSPREE -->
+        <form id="contactForm" novalidate>
+          <div class="form-group">
+            <label>Full Name</label>
+            <input name="name" type="text" placeholder="John Doe" required />
+          </div>
+
+          <div class="form-group">
+            <label>Email Address</label>
+            <input
+              name="email"
+              type="email"
+              placeholder="john@example.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input
+              name="phone"
+              type="tel"
+              placeholder="+94 70 123 4567"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Inquiry Type</label>
+            <select name="subject">
+              <option value="General Inquiry">General Inquiry</option>
+              <option value="Technical Support">Technical Support</option>
+              <option value="Collaboration">Collaboration</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Message</label>
+            <textarea
+              name="message"
+              rows="4"
+              placeholder="How can we help you?"
+              required
+            ></textarea>
+          </div>
+
+          <div id="contactFormStatus" class="form-status"></div>
+
+          <button
+            type="submit"
+            id="submitBtn"
+            class="btn-main"
+            style="
+              width: 100%;
+              padding: 15px;
+              border-radius: 8px;
+              cursor: pointer;
+              margin-top: 10px;
+            "
+          >
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Navigation & Modal Selectors
+      const contactModal = document.getElementById("contactModal");
+      const openContactBtn = document.getElementById("openContactBtn");
+      const closeContactBtn = document.getElementById("closeContactBtn");
+      const contactForm = document.getElementById("contactForm");
+      const contactFormStatus = document.getElementById("contactFormStatus");
+      const submitBtn = document.getElementById("submitBtn");
+
+      // Modal Functions
+      const showModal = () => {
+        contactModal.classList.remove("hidden");
+        document.body.classList.add("modal-open");
+      };
+
+      const hideModal = () => {
+        contactModal.classList.add("hidden");
+        document.body.classList.remove("modal-open");
+        contactForm.reset();
+        contactFormStatus.textContent = "";
+      };
+
+      openContactBtn.addEventListener("click", showModal);
+      closeContactBtn.addEventListener("click", hideModal);
+      window.addEventListener("click", (e) => {
+        if (e.target === contactModal) hideModal();
+      });
+
+      // Formspree Submission Logic
+      contactForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Basic Validation
+        if (!contactForm.checkValidity()) {
+          contactFormStatus.textContent =
+            "Please fill in all required fields correctly.";
+          contactFormStatus.className = "form-status error-text";
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending...";
+        contactFormStatus.textContent = "Processing your request...";
+        contactFormStatus.className = "form-status";
+
+        const formData = new FormData(contactForm);
+
+        try {
+          const response = await fetch("https://formspree.io/f/mqenpvgj", {
+            method: "POST",
+            body: formData,
+            headers: { Accept: "application/json" },
+          });
+
+          if (response.ok) {
+            contactFormStatus.textContent =
+              "Success! Your message has been sent to our team.";
+            contactFormStatus.className = "form-status success-text";
+            contactForm.reset();
+            // Close modal after 3 seconds
+            setTimeout(hideModal, 3000);
+          } else {
+            const data = await response.json();
+            contactFormStatus.textContent = data.errors
+              ? data.errors[0].message
+              : "Oops! Server error.";
+            contactFormStatus.className = "form-status error-text";
+          }
+        } catch (error) {
+          contactFormStatus.textContent =
+            "Check your internet connection and try again.";
+          contactFormStatus.className = "form-status error-text";
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Send Message";
+        }
+      });
+    </script>
+  </body>
+</html>
