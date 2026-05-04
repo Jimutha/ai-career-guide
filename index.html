@@ -10,7 +10,13 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <style>
-      /* --- Modal Scrollability & Styling --- */
+      /* --- Modal & Global Fixes --- */
+
+      /* Prevent background body from scrolling when modal is active */
+      body.modal-open {
+        overflow: hidden;
+      }
+
       .modal-overlay {
         display: flex;
         align-items: center;
@@ -20,8 +26,8 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.75);
-        z-index: 1000;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 2000;
         transition: opacity 0.3s ease;
       }
 
@@ -30,58 +36,100 @@
       }
 
       .modal-window {
-        max-height: 85vh; /* Responsive height */
-        overflow-y: auto;
-        width: 90%;
+        max-height: 90vh; /* Keeps modal inside the screen */
+        overflow-y: auto; /* Enables scrolling inside the form */
+        width: 95%;
         max-width: 550px;
-        background: white;
+        background: #ffffff;
         border-radius: 15px;
         position: relative;
         padding: 2.5rem;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
       }
 
-      /* Custom Scrollbar */
+      /* Scrollbar Styling for Modal */
       .modal-window::-webkit-scrollbar {
         width: 6px;
       }
       .modal-window::-webkit-scrollbar-thumb {
-        background: #bbb;
+        background: #cccccc;
         border-radius: 10px;
       }
 
-      body.modal-open {
-        overflow: hidden;
+      .modal-close {
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #333;
       }
 
-      .form-group {
+      /* Form Styling */
+      .contact-form .form-group {
         margin-bottom: 1.2rem;
         display: flex;
         flex-direction: column;
       }
-      .form-group label {
+
+      .contact-form label {
         font-weight: 600;
-        margin-bottom: 5px;
-        color: #333;
+        margin-bottom: 6px;
+        color: #444;
       }
-      .form-group input,
-      .form-group select,
-      .form-group textarea {
+
+      .contact-form input,
+      .contact-form select,
+      .contact-form textarea {
         padding: 12px;
         border: 1px solid #ddd;
         border-radius: 8px;
-        font-family: inherit;
+        font-size: 14px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      /* Navy Blue Submit Button */
+      #submitBtn {
+        width: 100%;
+        padding: 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 10px;
+        border: none;
+        background-color: #000080; /* Navy Blue */
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 600;
+        transition:
+          background-color 0.3s ease,
+          transform 0.1s ease;
+      }
+
+      #submitBtn:hover {
+        background-color: #000066; /* Darker Navy on hover */
+      }
+
+      #submitBtn:active {
+        transform: scale(0.98);
+      }
+
+      #submitBtn:disabled {
+        background-color: #999;
+        cursor: not-allowed;
       }
 
       .form-status {
-        margin-top: 10px;
-        font-weight: 500;
+        margin-top: 15px;
         text-align: center;
+        font-weight: 500;
       }
-      .success-text {
-        color: #27ae60;
+      .success {
+        color: #2ecc71;
       }
-      .error-text {
+      .error {
         color: #e74c3c;
       }
     </style>
@@ -116,74 +164,143 @@
       </div>
     </header>
 
-    <!-- Features Section Placeholder -->
-    <section id="features" class="section">
-      <!-- (Keep your features grid here as per previous versions) -->
+    <!-- ========== FEATURES SECTION ========== -->
+    <section id="features" class="section features-section">
+      <div class="section-header">
+        <h2>Powerful AI-Driven Features</h2>
+        <p class="subtitle">
+          Everything you need to succeed in your career journey
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Component 1 -->
+        <div class="feature-card">
+          <div class="feature-img-wrap">
+            <img
+              src="components/images/resume.jpg"
+              alt="Resume"
+              onerror="
+                this.style.display = 'none';
+                this.parentElement.classList.add('no-img');
+              "
+            />
+            <div class="feature-img-fallback">
+              <i class="fa-solid fa-file-lines"></i>
+            </div>
+            <div class="feature-badge">Component 01</div>
+          </div>
+          <div class="feature-body">
+            <h3>Resume & Career Personalization</h3>
+            <p>
+              AI-powered CV builder with real-time job suggestions and GitHub
+              analysis.
+            </p>
+            <ul class="feature-highlights">
+              <li><i class="fa-solid fa-check"></i> Smart CV Generator</li>
+              <li><i class="fa-solid fa-check"></i> GitHub Integration</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Component 2 -->
+        <div class="feature-card">
+          <div class="feature-img-wrap">
+            <img
+              src="components/images/filter.jpg"
+              alt="Filter"
+              onerror="
+                this.style.display = 'none';
+                this.parentElement.classList.add('no-img');
+              "
+            />
+            <div class="feature-img-fallback">
+              <i class="fa-solid fa-filter"></i>
+            </div>
+            <div class="feature-badge">Component 02</div>
+          </div>
+          <div class="feature-body">
+            <h3>AI Applicant Filter</h3>
+            <p>
+              Voice-based interview practice with instant feedback and skill
+              assessment.
+            </p>
+            <ul class="feature-highlights">
+              <li><i class="fa-solid fa-check"></i> Real-time Feedback</li>
+              <li><i class="fa-solid fa-check"></i> Skill Quiz</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Add other cards here similarly -->
+      </div>
     </section>
 
-    <!-- Modal Section -->
+    <!-- ========== CONTACT MODAL (SCROLLABLE & LINKED TO FORMSPREE) ========== -->
     <div class="modal-overlay hidden" id="contactModal" aria-hidden="true">
-      <div class="modal-window" role="dialog" aria-modal="true">
+      <div
+        class="modal-window"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contactModalTitle"
+      >
         <button
           type="button"
+          class="modal-close"
           id="closeContactBtn"
-          style="
-            position: absolute;
-            right: 20px;
-            top: 15px;
-            background: none;
-            border: none;
-            font-size: 2rem;
-            cursor: pointer;
-          "
+          aria-label="Close"
         >
           &times;
         </button>
-
         <div class="modal-header">
-          <h3>Send us a Message</h3>
-          <p>We usually respond within 24 hours.</p>
+          <h3 id="contactModalTitle">Contact Us</h3>
+          <p>Send us a message and we will respond to your email.</p>
         </div>
 
-        <!-- UPDATED FORM FOR FORMSPREE -->
-        <form id="contactForm" novalidate>
+        <form id="contactForm" class="contact-form">
           <div class="form-group">
-            <label>Full Name</label>
-            <input name="name" type="text" placeholder="John Doe" required />
-          </div>
-
-          <div class="form-group">
-            <label>Email Address</label>
+            <label for="contactName">Name</label>
             <input
-              name="email"
-              type="email"
-              placeholder="john@example.com"
+              id="contactName"
+              name="name"
+              type="text"
+              placeholder="Your full name"
               required
             />
           </div>
-
           <div class="form-group">
-            <label>Phone Number</label>
+            <label for="contactPhone">Phone Number</label>
             <input
+              id="contactPhone"
               name="phone"
               type="tel"
               placeholder="+94 70 123 4567"
               required
             />
           </div>
-
           <div class="form-group">
-            <label>Inquiry Type</label>
-            <select name="subject">
-              <option value="General Inquiry">General Inquiry</option>
-              <option value="Technical Support">Technical Support</option>
-              <option value="Collaboration">Collaboration</option>
+            <label for="contactEmail">Email Address</label>
+            <input
+              id="contactEmail"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="recipientEmail">Recipient</label>
+            <select id="recipientEmail" name="recipientEmail" required>
+              <option value="nuradhadakshina1234@gmail.com">
+                Admin (Nuradha)
+              </option>
+              <option value="dulajdjhansa@gmail.com">Support (Hansa)</option>
             </select>
           </div>
-
           <div class="form-group">
-            <label>Message</label>
+            <label for="contactMessage">Message</label>
             <textarea
+              id="contactMessage"
               name="message"
               rows="4"
               placeholder="How can we help you?"
@@ -191,28 +308,40 @@
             ></textarea>
           </div>
 
-          <div id="contactFormStatus" class="form-status"></div>
+          <div class="form-status" id="contactFormStatus"></div>
 
-          <button
-            type="submit"
-            id="submitBtn"
-            class="btn-main"
-            style="
-              width: 100%;
-              padding: 15px;
-              border-radius: 8px;
-              cursor: pointer;
-              margin-top: 10px;
-            "
-          >
-            Send Message
-          </button>
+          <button type="submit" id="submitBtn">Send Message</button>
         </form>
       </div>
     </div>
 
+    <footer>
+      <div class="footer-bottom">
+        &copy; 2026 AI Career Guidance System. All rights reserved.
+      </div>
+    </footer>
+
     <script>
-      // Navigation & Modal Selectors
+      // Navigation Logic
+      const sections = document.querySelectorAll("section[id], header[id]");
+      const navLinks = document.querySelectorAll(".nav-links a");
+
+      window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach((section) => {
+          if (window.scrollY >= section.offsetTop - 100) {
+            current = section.getAttribute("id");
+          }
+        });
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === "#" + current) {
+            link.classList.add("active");
+          }
+        });
+      });
+
+      // Modal Elements
       const contactModal = document.getElementById("contactModal");
       const openContactBtn = document.getElementById("openContactBtn");
       const closeContactBtn = document.getElementById("closeContactBtn");
@@ -220,7 +349,7 @@
       const contactFormStatus = document.getElementById("contactFormStatus");
       const submitBtn = document.getElementById("submitBtn");
 
-      // Modal Functions
+      // Modal Open/Close Logic
       const showModal = () => {
         contactModal.classList.remove("hidden");
         document.body.classList.add("modal-open");
@@ -229,32 +358,23 @@
       const hideModal = () => {
         contactModal.classList.add("hidden");
         document.body.classList.remove("modal-open");
-        contactForm.reset();
         contactFormStatus.textContent = "";
+        contactForm.reset();
       };
 
       openContactBtn.addEventListener("click", showModal);
       closeContactBtn.addEventListener("click", hideModal);
-      window.addEventListener("click", (e) => {
+      contactModal.addEventListener("click", (e) => {
         if (e.target === contactModal) hideModal();
       });
 
-      // Formspree Submission Logic
+      // Formspree Integration Logic
       contactForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        // Basic Validation
-        if (!contactForm.checkValidity()) {
-          contactFormStatus.textContent =
-            "Please fill in all required fields correctly.";
-          contactFormStatus.className = "form-status error-text";
-          return;
-        }
-
         submitBtn.disabled = true;
         submitBtn.textContent = "Sending...";
-        contactFormStatus.textContent = "Processing your request...";
-        contactFormStatus.className = "form-status";
+        contactFormStatus.textContent = "";
 
         const formData = new FormData(contactForm);
 
@@ -267,22 +387,21 @@
 
           if (response.ok) {
             contactFormStatus.textContent =
-              "Success! Your message has been sent to our team.";
-            contactFormStatus.className = "form-status success-text";
+              "Message sent! We will contact you soon.";
+            contactFormStatus.className = "form-status success";
             contactForm.reset();
-            // Close modal after 3 seconds
-            setTimeout(hideModal, 3000);
+            setTimeout(hideModal, 3000); // Close modal after 3 seconds
           } else {
-            const data = await response.json();
-            contactFormStatus.textContent = data.errors
-              ? data.errors[0].message
-              : "Oops! Server error.";
-            contactFormStatus.className = "form-status error-text";
+            const result = await response.json();
+            contactFormStatus.textContent = result.errors
+              ? result.errors[0].message
+              : "Error sending message.";
+            contactFormStatus.className = "form-status error";
           }
         } catch (error) {
           contactFormStatus.textContent =
-            "Check your internet connection and try again.";
-          contactFormStatus.className = "form-status error-text";
+            "Internet error. Please check your connection.";
+          contactFormStatus.className = "form-status error";
         } finally {
           submitBtn.disabled = false;
           submitBtn.textContent = "Send Message";
